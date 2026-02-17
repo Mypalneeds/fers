@@ -210,7 +210,69 @@
             // Add analytics tracking here if needed
         });
 
-        // Tooltip Initialization
+        // ===================================
+        // Hero Word Cycling (Typing Effect)
+        // ===================================
+        var heroWords = [
+            'Retail Space',
+            'Supermarket',
+            'Restaurant',
+            'Bakery',
+            'Cold Storage',
+            'Kitchen',
+            'Business'
+        ];
+        var wordIndex = 0;
+        var $typingText = $('.typing-text');
+
+        if ($typingText.length) {
+            setInterval(function() {
+                wordIndex = (wordIndex + 1) % heroWords.length;
+
+                // Fade out current word
+                $typingText.addClass('fade-out').removeClass('fade-in');
+
+                setTimeout(function() {
+                    $typingText.text(heroWords[wordIndex]);
+                    $typingText.removeClass('fade-out').addClass('fade-in');
+                }, 420);
+            }, 2800);
+        }
+
+        // ===================================
+        // Hero Image Slideshow
+        // ===================================
+        var currentSlide = 0;
+        var $slides = $('.hero-slideshow .slide');
+        var $dots = $('.slideshow-dots .dot');
+        var slideInterval;
+
+        function goToSlide(n) {
+            $slides.eq(currentSlide).removeClass('active');
+            $dots.eq(currentSlide).removeClass('active');
+            currentSlide = (n + $slides.length) % $slides.length;
+            $slides.eq(currentSlide).addClass('active');
+            $dots.eq(currentSlide).addClass('active');
+        }
+
+        function startSlideshow() {
+            slideInterval = setInterval(function() {
+                goToSlide(currentSlide + 1);
+            }, 3500);
+        }
+
+        if ($slides.length) {
+            startSlideshow();
+
+            // Dot click navigation
+            $dots.on('click', function() {
+                clearInterval(slideInterval);
+                goToSlide(parseInt($(this).data('slide')));
+                startSlideshow();
+            });
+        }
+
+
         var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
         var tooltipList = tooltipTriggerList.map(function(tooltipTriggerEl) {
             return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -336,7 +398,7 @@
         // Preload Critical Images
         function preloadImages() {
             var images = [
-                'images/logo.png',
+                'fer.png',
                 'images/hero-main.jpg'
             ];
             

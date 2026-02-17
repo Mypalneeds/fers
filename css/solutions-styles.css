@@ -1,0 +1,557 @@
+/* ===================================
+   Solution Pages Specific Styles
+   =================================== */
+
+/* Solution Hero Section */
+.solution-hero {
+    background: linear-gradient(135deg, #F0F7FF 0%, #E6F2FF 50%, #FFFFFF 100%);
+    position: relative;
+    overflow: hidden;
+    padding: 120px 0 80px;
+}
+
+.solution-hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -20%;
+    width: 80%;
+    height: 150%;
+    background: radial-gradient(circle, rgba(0, 78, 137, 0.08) 0%, transparent 70%);
+    border-radius: 50%;
+}
+
+.min-vh-75 {
+    min-height: 75vh;
+}
+
+.solution-hero-content {
+    position: relative;
+    z-index: 1;
+}
+
+.solution-features {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+.feature-tag {
+    display: inline-flex;
+    align-items: center;
+    padding: 8px 16px;
+    background: rgba(255, 107, 53, 0.1);
+    color: var(--primary-color);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.solution-hero-image {
+    position: relative;
+    z-index: 1;
+}
+
+/* Solution Overview Section */
+.solution-overview {
+    padding: 100px 0;
+}
+
+.overview-card {
+    background: var(--white);
+    padding: 40px 30px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    height: 100%;
+    text-align: center;
+}
+
+.overview-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.overview-icon {
+    width: 70px;
+    height: 70px;
+    margin: 0 auto 20px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.overview-card:nth-child(even) .overview-icon {
+    background: linear-gradient(135deg, var(--secondary-color), #0066B3);
+}
+
+.overview-card:hover .overview-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.overview-card h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--dark-color);
+}
+
+.overview-card p {
+    font-size: 15px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* Products Section */
+.products-section {
+    padding: 100px 0;
+}
+
+.product-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-sm);
+    transition: var(--transition);
+    border: 1px solid var(--border-color);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.product-image {
+    position: relative;
+    overflow: hidden;
+    height: 250px;
+    background: var(--light-bg);
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1);
+}
+
+.product-badge {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    color: var(--white);
+    padding: 6px 16px;
+    border-radius: 50px;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.product-info {
+    padding: 24px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.product-info h4 {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--dark-color);
+}
+
+.product-info > p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 16px;
+    line-height: 1.7;
+}
+
+.product-features {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px 0;
+    flex: 1;
+}
+
+.product-features li {
+    font-size: 14px;
+    color: var(--text-color);
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+}
+
+.product-features i {
+    color: var(--primary-color);
+}
+
+/* Applications Section */
+.applications-section {
+    padding: 100px 0;
+    background: var(--white);
+}
+
+.application-card {
+    background: var(--white);
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.application-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.app-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.application-card:nth-child(even) .app-icon {
+    background: linear-gradient(135deg, var(--secondary-color), #0066B3);
+}
+
+.application-card:hover .app-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.application-card h5 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.application-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Kitchen Types / Bakery Types Section */
+.kitchen-types-section,
+.bakery-types-section {
+    padding: 100px 0;
+}
+
+.kitchen-type-card,
+.bakery-type-card {
+    background: var(--white);
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: var(--transition);
+    height: 100%;
+}
+
+.kitchen-type-card:hover,
+.bakery-type-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.type-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--white);
+    transition: var(--transition);
+}
+
+.kitchen-type-card:nth-child(even) .type-icon,
+.bakery-type-card:nth-child(even) .type-icon {
+    background: linear-gradient(135deg, var(--secondary-color), #0066B3);
+}
+
+.kitchen-type-card:hover .type-icon,
+.bakery-type-card:hover .type-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+
+.kitchen-type-card h5,
+.bakery-type-card h5 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.kitchen-type-card p,
+.bakery-type-card p {
+    font-size: 14px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Production Process Section */
+.production-process-section {
+    padding: 100px 0;
+    background: var(--light-bg);
+}
+
+.process-step-card {
+    background: var(--white);
+    padding: 32px 24px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    text-align: center;
+    transition: var(--transition);
+    height: 100%;
+    position: relative;
+}
+
+.process-step-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.step-number {
+    position: absolute;
+    top: -16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: var(--white);
+    box-shadow: var(--shadow-sm);
+}
+
+.step-icon {
+    width: 60px;
+    height: 60px;
+    margin: 0 auto 16px;
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.process-step-card:nth-child(even) .step-icon {
+    background: rgba(0, 78, 137, 0.1);
+    color: var(--secondary-color);
+}
+
+.process-step-card:hover .step-icon {
+    transform: scale(1.1);
+}
+
+.process-step-card h5 {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.process-step-card p {
+    font-size: 13px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.6;
+}
+
+/* Benefits Section */
+.benefits-section {
+    padding: 100px 0;
+}
+
+.benefits-image {
+    position: relative;
+}
+
+.benefit-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.benefit-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+}
+
+.benefit-icon {
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+    border-radius: var(--radius-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    color: var(--white);
+    flex-shrink: 0;
+}
+
+.benefit-item:nth-child(even) .benefit-icon {
+    background: linear-gradient(135deg, var(--secondary-color), #0066B3);
+}
+
+.benefit-content h5 {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 8px;
+    color: var(--dark-color);
+}
+
+.benefit-content p {
+    font-size: 15px;
+    color: var(--text-light);
+    margin: 0;
+    line-height: 1.7;
+}
+
+/* Brand Logos */
+.brands-section {
+    padding: 80px 0;
+}
+
+.brand-logo {
+    background: var(--white);
+    padding: 30px;
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color);
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 120px;
+}
+
+.brand-logo:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--primary-color);
+}
+
+.brand-logo img {
+    max-height: 60px;
+    width: auto;
+    opacity: 0.7;
+    transition: var(--transition);
+    filter: grayscale(100%);
+}
+
+.brand-logo:hover img {
+    opacity: 1;
+    filter: grayscale(0%);
+}
+
+/* Responsive Styles */
+@media (max-width: 991px) {
+    .solution-hero {
+        padding: 100px 0 60px;
+    }
+
+    .min-vh-75 {
+        min-height: auto;
+    }
+
+    .product-image {
+        height: 220px;
+    }
+
+    .benefits-section .row {
+        flex-direction: column-reverse;
+    }
+
+    .benefits-image {
+        margin-bottom: 40px;
+    }
+}
+
+@media (max-width: 767px) {
+    .solution-hero {
+        padding: 80px 0 40px;
+    }
+
+    .solution-features {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .feature-tag {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .overview-card,
+    .application-card,
+    .kitchen-type-card,
+    .bakery-type-card,
+    .process-step-card {
+        padding: 24px 20px;
+    }
+
+    .product-info {
+        padding: 20px;
+    }
+
+    .benefit-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .benefit-icon {
+        margin: 0 auto;
+    }
+}
