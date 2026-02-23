@@ -19,104 +19,345 @@
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 
     <style>
-        /* ── Word Cycling ─────────────────────────── */
-        .hero-word-wrap { display: inline-block; }
+        /* ══════════════════════════════════════
+           NAVBAR
+        ══════════════════════════════════════ */
+        .navbar { padding: 10px 0; box-shadow: 0 2px 20px rgba(0,0,0,0.08); }
+        .navbar-brand .logo { height: 120px; width: auto; }
 
-        #heroWord {
-            display: inline-block;
+        /* ══════════════════════════════════════
+           HERO
+        ══════════════════════════════════════ */
+        .hero-section {
+            position: relative;
+            min-height: 92vh;
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            padding: 0 !important;
+        }
+        .hero-bg-slideshow { position: absolute; inset: 0; z-index: 0; }
+        .hero-bg-slideshow .bg-slide { position: absolute; inset: 0; opacity: 0; transition: opacity 1s ease; }
+        .hero-bg-slideshow .bg-slide.active { opacity: 1; }
+        .hero-bg-slideshow .bg-slide img { width: 100%; height: 100%; object-fit: cover; display: block; }
+        .hero-overlay {
+            position: absolute; inset: 0;
+            background: linear-gradient(105deg, rgba(0,20,50,0.82) 0%, rgba(0,40,80,0.65) 50%, rgba(0,20,50,0.30) 100%);
+            z-index: 1;
+        }
+        .hero-content-wrap { position: relative; z-index: 2; padding: 110px 0 80px; }
+
+        .hero-word-highlight {
             background: linear-gradient(135deg, #FF6B35, #FFA552);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            display: inline-block;
             transition: opacity 0.35s ease, transform 0.35s ease;
         }
-        #heroWord.out {
-            opacity: 0;
-            transform: translateY(-16px);
+        .hero-word-highlight.out { opacity: 0; transform: translateY(-14px); }
+        .hero-word-highlight.in { animation: wIn 0.35s ease forwards; }
+        @keyframes wIn {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
-        #heroWord.in {
-            animation: wordIn 0.35s ease forwards;
+        .hero-main-title {
+            font-size: clamp(2.6rem, 5.5vw, 4.2rem);
+            font-weight: 800; color: #fff; line-height: 1.15; letter-spacing: -0.5px;
         }
-        @keyframes wordIn {
-            from { opacity: 0; transform: translateY(16px); }
-            to   { opacity: 1; transform: translateY(0);    }
-        }
+        .hero-sub { font-size: 1.15rem; color: rgba(255,255,255,0.82); max-width: 520px; line-height: 1.7; }
 
-        /* ── Hero Spacing Fix ─────────────────────── */
-        .hero-section { padding-top: 0 !important; }
-        .hero-row {
-            padding-top: 50px;
-            padding-bottom: 50px;
+        .trust-pills { display: flex; flex-wrap: wrap; gap: 10px; }
+        .trust-pill {
+            display: inline-flex; align-items: center; gap: 7px;
+            background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25);
+            color: #fff; padding: 7px 16px; border-radius: 50px;
+            font-size: 13px; font-weight: 600; backdrop-filter: blur(6px);
         }
+        .trust-pill i { color: #FF6B35; font-size: 12px; }
 
-        /* ── Hero Slideshow ───────────────────────── */
-        .hero-slideshow {
-            position: relative;
-            border-radius: 16px;
-            overflow: hidden;
+        .btn-hero-primary {
+            background: linear-gradient(135deg, #FF6B35, #FFA552); color: #fff;
+            padding: 16px 36px; border-radius: 50px; font-weight: 700; font-size: 16px;
+            border: none; display: inline-flex; align-items: center; gap: 10px;
+            box-shadow: 0 8px 28px rgba(255,107,53,0.45); transition: all 0.3s ease; text-decoration: none;
         }
-        .hero-slideshow .slide { display: none; }
-        .hero-slideshow .slide.active {
-            display: block;
-            animation: imgIn 0.6s ease forwards;
+        .btn-hero-primary:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(255,107,53,0.55); color: #fff; }
+        .btn-hero-outline {
+            background: transparent; color: #fff; padding: 15px 32px; border-radius: 50px;
+            font-weight: 600; font-size: 16px; border: 2px solid rgba(255,255,255,0.55);
+            display: inline-flex; align-items: center; gap: 10px; transition: all 0.3s ease; text-decoration: none;
         }
-        @keyframes imgIn {
-            from { opacity: 0; transform: scale(1.05); }
-            to   { opacity: 1; transform: scale(1);    }
-        }
-        .hero-slideshow .slide img {
-            width: 100%;
-            height: 430px;
-            object-fit: cover;
-            display: block;
-            border-radius: 16px;
-            box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-        }
+        .btn-hero-outline:hover { background: rgba(255,255,255,0.15); border-color: #fff; color: #fff; transform: translateY(-3px); }
 
-        /* Arrows */
-        .slide-btn {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px; height: 40px;
-            border-radius: 50%;
-            border: none;
-            background: rgba(255,255,255,0.88);
-            color: #004E89;
-            font-size: 14px;
-            cursor: pointer;
-            z-index: 5;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
-            transition: background 0.25s, color 0.25s;
-            display: flex; align-items: center; justify-content: center;
+        .hero-stats-bar {
+            display: flex; gap: 40px; flex-wrap: wrap;
+            margin-top: 48px; padding-top: 36px;
+            border-top: 1px solid rgba(255,255,255,0.18);
         }
-        .slide-btn:hover { background: #FF6B35; color: #fff; }
-        .slide-btn.prev  { left: 12px; }
-        .slide-btn.next  { right: 12px; }
+        .hero-stat-item { text-align: left; }
+        .hero-stat-num { font-size: 2.2rem; font-weight: 800; color: #FF6B35; line-height: 1; font-family: 'Outfit', sans-serif; }
+        .hero-stat-label { font-size: 13px; color: rgba(255,255,255,0.7); margin-top: 4px; font-weight: 500; }
 
-        /* Dots */
-        .slide-dots {
-            display: flex;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 14px;
-        }
-        .slide-dots span {
-            width: 10px; height: 10px;
-            border-radius: 50%;
-            background: rgba(0,78,137,0.25);
-            cursor: pointer;
-            display: inline-block;
+        .hero-dots { position: absolute; bottom: 28px; left: 50%; transform: translateX(-50%); z-index: 3; display: flex; gap: 8px; }
+        .hero-dots span {
+            width: 10px; height: 10px; border-radius: 50%;
+            background: rgba(255,255,255,0.4); cursor: pointer; display: inline-block;
             transition: background 0.3s, transform 0.3s;
         }
-        .slide-dots span.active {
-            background: #FF6B35;
-            transform: scale(1.4);
-        }
+        .hero-dots span.active { background: #FF6B35; transform: scale(1.4); }
 
+        /* ══════════════════════════════════════
+           TRUST BAR
+        ══════════════════════════════════════ */
+        .trust-bar { background: #fff; border-bottom: 1px solid #E5E7EB; padding: 20px 0; }
+        .trust-bar-inner { display: flex; align-items: center; justify-content: space-around; flex-wrap: wrap; gap: 16px; }
+        .trust-bar-item { display: flex; align-items: center; gap: 10px; color: #2C3E50; font-weight: 600; font-size: 14px; }
+        .trust-divider { width: 1px; height: 36px; background: #E5E7EB; }
+
+        /* ══════════════════════════════════════
+           SOLUTIONS GRID
+        ══════════════════════════════════════ */
+        .solutions-visual-section { padding: 100px 0; background: #F8F9FA; }
+        .sol-card {
+            position: relative; border-radius: 20px; overflow: hidden; height: 380px;
+            display: flex; align-items: flex-end; text-decoration: none;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.12); transition: transform 0.35s ease, box-shadow 0.35s ease;
+        }
+        .sol-card:hover { transform: translateY(-8px); box-shadow: 0 12px 36px rgba(0,0,0,0.2); }
+        .sol-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .sol-card:hover img { transform: scale(1.06); }
+        .sol-card-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,20,50,0.88) 0%, rgba(0,20,50,0.1) 60%); }
+        .sol-card-body { position: relative; z-index: 2; padding: 28px; width: 100%; }
+        .sol-card-icon {
+            width: 48px; height: 48px; background: linear-gradient(135deg, #FF6B35, #FFA552);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; margin-bottom: 12px;
+        }
+        .sol-card-body h3 { font-size: 22px; font-weight: 800; color: #fff; margin-bottom: 6px; }
+        .sol-card-body p { font-size: 13px; color: rgba(255,255,255,0.8); margin-bottom: 14px; line-height: 1.6; }
+        .sol-card-link { display: inline-flex; align-items: center; gap: 8px; color: #FF6B35; font-weight: 700; font-size: 13px; }
+        .sol-card-lg { height: 380px; }
+
+        /* ══════════════════════════════════════
+           ABOUT STRIP
+        ══════════════════════════════════════ */
+        .about-strip { padding: 100px 0; background: #fff; }
+        .about-strip .section-badge {
+            display: inline-block; background: rgba(255,107,53,0.1); color: #FF6B35;
+            font-weight: 700; font-size: 13px; padding: 6px 18px;
+            border-radius: 50px; letter-spacing: 0.5px; text-transform: uppercase;
+        }
+        .check-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 18px; }
+        .check-item .ci-icon {
+            width: 26px; height: 26px; background: linear-gradient(135deg, #FF6B35, #FFA552);
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            color: #fff; font-size: 11px; flex-shrink: 0; margin-top: 2px;
+        }
+        .check-item .ci-text h6 { font-size: 16px; font-weight: 700; margin-bottom: 2px; color: #1A1F2E; }
+        .check-item .ci-text p { font-size: 14px; color: #6C757D; margin: 0; }
+        .exp-badge {
+            position: absolute; bottom: 24px; right: -16px;
+            background: linear-gradient(135deg, #FF6B35, #FFA552); color: #fff;
+            border-radius: 16px; padding: 20px 24px; text-align: center;
+            box-shadow: 0 8px 28px rgba(255,107,53,0.4);
+        }
+        .exp-badge h3 { font-size: 2.5rem; font-weight: 800; color: #fff; margin: 0; }
+        .exp-badge p  { font-size: 12px; margin: 0; opacity: 0.9; font-weight: 600; }
+
+        /* ══════════════════════════════════════
+           NUMBERS SECTION
+        ══════════════════════════════════════ */
+        .numbers-section { background: linear-gradient(135deg, #004E89 0%, #003A66 100%); padding: 80px 0; }
+        .num-card { text-align: center; padding: 20px; border-right: 1px solid rgba(255,255,255,0.15); }
+        .num-card:last-child { border-right: none; }
+        .num-card .num { font-size: 3rem; font-weight: 800; color: #FF6B35; font-family: 'Outfit', sans-serif; }
+        .num-card .lbl { font-size: 15px; color: rgba(255,255,255,0.75); font-weight: 500; margin-top: 4px; }
+
+        /* ══════════════════════════════════════
+           WHY CHOOSE
+        ══════════════════════════════════════ */
+        .why-section { padding: 100px 0; background: #F8F9FA; }
+        .why-card {
+            background: #fff; border-radius: 20px; padding: 36px 28px; height: 100%;
+            border: 1px solid #E5E7EB; transition: all 0.3s ease; position: relative; overflow: hidden;
+        }
+        .why-card::before {
+            content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+            background: linear-gradient(180deg, #FF6B35, #FFA552); border-radius: 4px 0 0 4px;
+            opacity: 0; transition: opacity 0.3s;
+        }
+        .why-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,0.1); border-color: transparent; }
+        .why-card:hover::before { opacity: 1; }
+        .why-card-num {
+            font-size: 4rem; font-weight: 800; color: rgba(255,107,53,0.1);
+            line-height: 1; font-family: 'Outfit', sans-serif; position: absolute; top: 16px; right: 24px;
+        }
+        .why-card-icon {
+            width: 56px; height: 56px; background: linear-gradient(135deg, #FF6B35, #FFA552);
+            border-radius: 14px; display: flex; align-items: center; justify-content: center;
+            font-size: 22px; color: #fff; margin-bottom: 20px;
+        }
+        .why-card h4 { font-size: 19px; font-weight: 700; margin-bottom: 10px; color: #1A1F2E; }
+        .why-card p  { font-size: 14px; color: #6C757D; line-height: 1.7; margin: 0; }
+
+        /* ══════════════════════════════════════
+           TESTIMONIALS
+        ══════════════════════════════════════ */
+        .testi-section { padding: 100px 0; background: #fff; }
+        .testi-card {
+            background: #F8F9FA; border-radius: 20px; padding: 32px 28px; height: 100%;
+            border: 1px solid #E5E7EB; transition: all 0.3s ease; position: relative;
+        }
+        .testi-card:hover { transform: translateY(-6px); box-shadow: 0 12px 36px rgba(0,0,0,0.1); background: #fff; }
+        .testi-quote { font-size: 3rem; color: #FF6B35; line-height: 1; font-family: Georgia, serif; margin-bottom: 8px; }
+        .testi-text { font-size: 15px; color: #2C3E50; line-height: 1.75; margin-bottom: 24px; font-style: italic; }
+        .testi-stars { color: #FF6B35; font-size: 13px; margin-bottom: 16px; letter-spacing: 2px; }
+        .testi-author { display: flex; align-items: center; gap: 14px; }
+        .testi-avatar {
+            width: 52px; height: 52px; border-radius: 50%; overflow: hidden;
+            background: linear-gradient(135deg, #FF6B35, #FFA552);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; font-weight: 700; flex-shrink: 0;
+        }
+        .testi-avatar img { width: 100%; height: 100%; object-fit: cover; }
+        .testi-name { font-size: 16px; font-weight: 700; color: #1A1F2E; margin: 0; }
+        .testi-role { font-size: 13px; color: #6C757D; margin: 0; }
+
+        /* ══════════════════════════════════════
+           PARTNERS SCROLLING STRIP
+        ══════════════════════════════════════ */
+        .partners-scroll-section { padding: 80px 0 60px; background: #F8F9FA; overflow: hidden; }
+        .partners-track-wrap { overflow: hidden; width: 100%; margin-top: 32px; position: relative; }
+        .partners-track-wrap::before,
+        .partners-track-wrap::after {
+            content: ''; position: absolute; top: 0; bottom: 0; width: 100px; z-index: 2; pointer-events: none;
+        }
+        .partners-track-wrap::before { left: 0; background: linear-gradient(to right, #F8F9FA, transparent); }
+        .partners-track-wrap::after  { right: 0; background: linear-gradient(to left, #F8F9FA, transparent); }
+        .partners-track {
+            display: flex; gap: 20px; width: max-content;
+            animation: scrollPartners 30s linear infinite;
+        }
+        .partners-track:hover { animation-play-state: paused; }
+        @keyframes scrollPartners {
+            0%   { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+        .partner-logo-item { flex-shrink: 0; }
+        .partner-logo-box {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            gap: 8px; width: 160px; height: 90px; background: #fff; border-radius: 14px;
+            border: 1px solid #E5E7EB; box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+            transition: all 0.3s ease; padding: 16px;
+        }
+        .partner-logo-box:hover { border-color: #FF6B35; box-shadow: 0 6px 24px rgba(255,107,53,0.18); transform: translateY(-4px); }
+        .partner-logo-box i { font-size: 22px; color: #FF6B35; }
+        .partner-logo-box span { font-size: 13px; font-weight: 700; color: #1A1F2E; text-align: center; }
+
+        /* ══════════════════════════════════════
+           OUR BRANDS SECTION
+        ══════════════════════════════════════ */
+        .our-brands-section { padding: 100px 0; background: #fff; }
+        .brand-card {
+            background: #F8F9FA; border: 1px solid #E5E7EB; border-radius: 16px;
+            padding: 28px 16px 20px; text-align: center; transition: all 0.3s ease; height: 100%;
+        }
+        .brand-card:hover { transform: translateY(-6px); border-color: #FF6B35; box-shadow: 0 12px 32px rgba(255,107,53,0.14); background: #fff; }
+        .brand-card-icon {
+            width: 52px; height: 52px; margin: 0 auto 14px;
+            background: linear-gradient(135deg, #FF6B35, #FFA552); border-radius: 12px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; transition: all 0.3s ease;
+        }
+        .brand-card:hover .brand-card-icon { transform: scale(1.1) rotate(5deg); }
+        .brand-card h6 { font-size: 15px; font-weight: 800; color: #1A1F2E; margin-bottom: 4px; }
+        .brand-card p  { font-size: 11px; color: #6C757D; margin: 0; line-height: 1.5; }
+
+        /* ══════════════════════════════════════
+           FAQ SECTION
+        ══════════════════════════════════════ */
+        .faq-section { padding: 100px 0; background: #F8F9FA; }
+        .faq-item {
+            border: 1px solid #E5E7EB !important; border-radius: 14px !important;
+            margin-bottom: 12px !important; overflow: hidden; background: #fff;
+        }
+        .faq-btn {
+            font-size: 16px; font-weight: 700; color: #1A1F2E !important;
+            background: #fff !important; padding: 20px 24px !important;
+            border: none !important; box-shadow: none !important;
+        }
+        .faq-btn:not(.collapsed) { color: #FF6B35 !important; background: #FFF8F5 !important; }
+        .faq-btn::after {
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath fill='none' stroke='%23FF6B35' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3E%3C/svg%3E") !important;
+        }
+        .faq-btn:focus { box-shadow: none !important; }
+        .faq-q-icon { color: #FF6B35; font-size: 18px; }
+        .faq-body { font-size: 15px; color: #5A6270; line-height: 1.8; padding: 0 24px 22px !important; background: #FFF8F5 !important; }
+
+        /* ══════════════════════════════════════
+           CTA BAND
+        ══════════════════════════════════════ */
+        .cta-band { background: linear-gradient(135deg, #FF6B35 0%, #FFA552 100%); padding: 80px 0; }
+        .cta-band h2 { font-size: clamp(1.8rem, 3.5vw, 2.8rem); font-weight: 800; color: #fff; }
+        .cta-band p  { color: rgba(255,255,255,0.88); font-size: 17px; }
+        .btn-cta-white {
+            background: #fff; color: #FF6B35; padding: 16px 40px; border-radius: 50px;
+            font-weight: 700; font-size: 16px; border: none; display: inline-flex;
+            align-items: center; gap: 10px; box-shadow: 0 8px 28px rgba(0,0,0,0.15);
+            transition: all 0.3s ease; text-decoration: none;
+        }
+        .btn-cta-white:hover { transform: translateY(-3px); box-shadow: 0 12px 36px rgba(0,0,0,0.22); color: #E85A2A; }
+        .btn-cta-outline-white {
+            background: transparent; color: #fff; padding: 15px 36px; border-radius: 50px;
+            font-weight: 600; font-size: 16px; border: 2px solid rgba(255,255,255,0.7);
+            display: inline-flex; align-items: center; gap: 10px;
+            transition: all 0.3s ease; text-decoration: none;
+        }
+        .btn-cta-outline-white:hover { background: rgba(255,255,255,0.15); border-color: #fff; color: #fff; transform: translateY(-3px); }
+
+        /* ══════════════════════════════════════
+           CONTACT BAR
+        ══════════════════════════════════════ */
+        .contact-bar { background: #1A1F2E; padding: 50px 0; }
+        .cbar-item { display: flex; align-items: flex-start; gap: 16px; }
+        .cbar-icon {
+            width: 50px; height: 50px; background: linear-gradient(135deg, #FF6B35, #FFA552);
+            border-radius: 12px; display: flex; align-items: center; justify-content: center;
+            font-size: 20px; color: #fff; flex-shrink: 0;
+        }
+        .cbar-text h5  { color: #fff; font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+        .cbar-text p, .cbar-text a { color: rgba(255,255,255,0.65); font-size: 14px; margin: 0; text-decoration: none; }
+        .cbar-text a:hover { color: #FF6B35; }
+
+        /* ══════════════════════════════════════
+           SHARED SECTION HEADERS
+        ══════════════════════════════════════ */
+        .sec-badge {
+            display: inline-block; background: rgba(255,107,53,0.1); color: #FF6B35;
+            font-weight: 700; font-size: 12px; padding: 6px 18px; border-radius: 50px;
+            letter-spacing: 1px; text-transform: uppercase; margin-bottom: 14px;
+        }
+        .sec-title { font-size: clamp(1.8rem, 3vw, 2.6rem); font-weight: 800; color: #1A1F2E; line-height: 1.2; }
+        .sec-sub { font-size: 16px; color: #6C757D; max-width: 540px; margin: 0 auto; }
+
+        /* ══════════════════════════════════════
+           RESPONSIVE
+        ══════════════════════════════════════ */
+        @media (max-width: 991px) {
+            .sol-card { height: 300px; }
+            .num-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.15); }
+            .num-card:last-child { border-bottom: none; }
+            .trust-divider { display: none; }
+            .exp-badge { right: 16px; }
+            .hero-stats-bar { gap: 24px; }
+        }
         @media (max-width: 767px) {
-            .hero-slideshow .slide img { height: 260px; }
-            .hero-row { padding-top: 30px; padding-bottom: 30px; }
+            .hero-main-title { font-size: 2.2rem; }
+            .sol-card { height: 260px; }
+            .hero-stats-bar { gap: 20px; }
+            .hero-stat-num { font-size: 1.8rem; }
+            .navbar-brand .logo { height: 55px; }
         }
     </style>
 </head>
@@ -128,7 +369,7 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-white sticky-top">
     <div class="container">
         <a class="navbar-brand" href="index.html">
-            <img src="fer.png" alt="FERS Logo" class="logo" height="50">
+            <img src="fer.png" alt="FERS Logo" class="logo">
         </a>
         <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
@@ -156,7 +397,7 @@
                     </ul>
                 </li>
                 <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
-                <li class="nav-item ms-lg-3"><a href="contact.html" class="btn btn-primary">Get Quote</a></li>
+                <li class="nav-item ms-lg-3"><a href="contact.html" class="btn btn-primary">Get Free Quote</a></li>
             </ul>
         </div>
     </div>
@@ -166,121 +407,206 @@
      HERO
 ═══════════════════════════════════════════ -->
 <section class="hero-section">
+    <div class="hero-bg-slideshow" id="heroBgSlideshow">
+        <div class="bg-slide active"><img src="images/slide.jpeg" alt="Supermarket Solutions"></div>
+        <div class="bg-slide"><img src="images/bakery.webp" alt="Bakery Solutions"></div>
+        <div class="bg-slide"><img src="images/super.jpg" alt="Restaurant Solutions"></div>
+        <div class="bg-slide"><img src="images/coldroom.webp" alt="Cold Storage"></div>
+        <div class="bg-slide"><img src="images/super.jpg" alt="Retail Equipment"></div>
+    </div>
+    <div class="hero-overlay"></div>
+
+    <div class="container hero-content-wrap">
+        <div class="row">
+            <div class="col-lg-7 col-xl-6">
+                <div class="trust-pills mb-4" data-aos="fade-up">
+                    <span class="trust-pill"><i class="fas fa-star"></i> Nigeria's #1 Retail Equipment Provider</span>
+                    <span class="trust-pill"><i class="fas fa-check-circle"></i> 500+ Cold Room Projects</span>
+                </div>
+
+                <h1 class="hero-main-title mb-4" data-aos="fade-up" data-aos-delay="80">
+                    We Equip Your<br>
+                    <span class="hero-word-highlight" id="heroWord">Supermarket</span><br>
+                    for Success
+                </h1>
+
+                <p class="hero-sub mb-5" data-aos="fade-up" data-aos-delay="150">
+                    From supermarket shelving to industrial cold rooms — FERS supplies, installs, and supports premium retail equipment across Nigeria. End-to-end, done right.
+                </p>
+
+                <div class="d-flex flex-wrap gap-3" data-aos="fade-up" data-aos-delay="220">
+                    <a href="contact.html" class="btn-hero-primary">Get a Free Quote <i class="fas fa-arrow-right"></i></a>
+                    <a href="about.html" class="btn-hero-outline"><i class="fas fa-play-circle"></i> See Our Work</a>
+                </div>
+
+                <div class="hero-stats-bar" data-aos="fade-up" data-aos-delay="300">
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-num">500+</div>
+                        <div class="hero-stat-label">Cold Rooms Installed</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-num">300+</div>
+                        <div class="hero-stat-label">Supermarkets Equipped</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-num">200+</div>
+                        <div class="hero-stat-label">Kitchen Projects</div>
+                    </div>
+                    <div class="hero-stat-item">
+                        <div class="hero-stat-num">150+</div>
+                        <div class="hero-stat-label">Bakeries Fitted</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-dots" id="heroDots">
+        <span class="active" data-index="0"></span>
+        <span data-index="1"></span>
+        <span data-index="2"></span>
+        <span data-index="3"></span>
+        <span data-index="4"></span>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     TRUST BAR
+═══════════════════════════════════════════ -->
+<div class="trust-bar">
     <div class="container">
-        <div class="row align-items-center hero-row g-5">
+        <div class="trust-bar-inner">
+            <div class="trust-bar-item">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF6B35,#FFA552);border-radius:8px;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-handshake"></i>
+                </div>
+                <span>Representing Top Equipment Brands</span>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-bar-item">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF6B35,#FFA552);border-radius:8px;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-award"></i>
+                </div>
+                <span>Premium Brand Equipment</span>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-bar-item">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF6B35,#FFA552);border-radius:8px;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-tools"></i>
+                </div>
+                <span>Professional Installation</span>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-bar-item">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF6B35,#FFA552);border-radius:8px;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-headset"></i>
+                </div>
+                <span>24/7 After-Sales Support</span>
+            </div>
+            <div class="trust-divider"></div>
+            <div class="trust-bar-item">
+                <div style="width:36px;height:36px;background:linear-gradient(135deg,#FF6B35,#FFA552);border-radius:8px;color:#fff;font-size:15px;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <span>Full Warranty Coverage</span>
+            </div>
+        </div>
+    </div>
+</div>
 
-            <!-- LEFT -->
-            <div class="col-lg-6" data-aos="fade-right">
-                <div class="hero-content">
-                    <div class="hero-badge mb-3">
-                        <i class="fas fa-star me-2"></i>
-                        Nigeria's Leading Retail Solutions Provider
+<!-- ═══════════════════════════════════════════
+     SOLUTIONS — visual cards grid
+═══════════════════════════════════════════ -->
+<section class="solutions-visual-section">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="sec-badge">Our Solutions</span>
+            <h2 class="sec-title mt-2">Everything Your Business Needs</h2>
+            <p class="sec-sub mt-3">Comprehensive equipment and fitout solutions for every type of food retail and commercial kitchen business.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-lg-6" data-aos="fade-up">
+                <a href="supermarket-solutions.html" class="sol-card sol-card-lg">
+                    <img src="images/slide3.jpg" alt="Supermarket Solutions">
+                    <div class="sol-card-overlay"></div>
+                    <div class="sol-card-body">
+                        <div class="sol-card-icon"><i class="fas fa-store"></i></div>
+                        <h3>Supermarket Solutions</h3>
+                        <p>Complete fitout — shelving, gondolas, refrigeration, checkout counters, and trolleys.</p>
+                        <span class="sol-card-link">Explore <i class="fas fa-arrow-right"></i></span>
                     </div>
-                    <h1 class="hero-title mb-4">
-                        Transform Your<br>
-                        <span class="hero-word-wrap">
-                            <span id="heroWord">Retail Space</span>
-                        </span>
-                    </h1>
-                    <p class="hero-text mb-5">
-                        Premium equipment and innovative solutions for supermarkets, restaurants, bakeries, and commercial kitchens across Nigeria.
-                    </p>
-                    <div class="hero-buttons">
-                        <a href="contact.html" class="btn btn-primary btn-lg me-3">
-                            Get Started <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+            <div class="col-lg-6">
+                <div class="row g-4">
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="80">
+                        <a href="cold-storage.html" class="sol-card" style="height:178px;">
+                            <img src="images/coldroom.webp" alt="Cold Storage">
+                            <div class="sol-card-overlay"></div>
+                            <div class="sol-card-body" style="padding:20px;">
+                                <div class="sol-card-icon" style="width:38px;height:38px;font-size:16px;margin-bottom:8px;"><i class="fas fa-snowflake"></i></div>
+                                <h3 style="font-size:18px;">Cold Storage</h3>
+                                <span class="sol-card-link" style="font-size:12px;">Explore <i class="fas fa-arrow-right"></i></span>
+                            </div>
                         </a>
-                        <a href="about.html" class="btn btn-secondary btn-lg">Learn More</a>
                     </div>
-                    <div class="hero-stats mt-5">
-                        <div class="row g-4">
-                            <div class="col-4">
-                                <div class="stat-item">
-                                    <h3 class="stat-number">500+</h3>
-                                    <p class="stat-label">Projects</p>
-                                </div>
+                    <div class="col-md-6" data-aos="fade-up" data-aos-delay="120">
+                        <a href="kitchen-solutions.html" class="sol-card" style="height:178px;">
+                            <img src="images/slide.jpeg" alt="Kitchen Solutions">
+                            <div class="sol-card-overlay"></div>
+                            <div class="sol-card-body" style="padding:20px;">
+                                <div class="sol-card-icon" style="width:38px;height:38px;font-size:16px;margin-bottom:8px;"><i class="fas fa-utensils"></i></div>
+                                <h3 style="font-size:18px;">Kitchen Solutions</h3>
+                                <span class="sol-card-link" style="font-size:12px;">Explore <i class="fas fa-arrow-right"></i></span>
                             </div>
-                            <div class="col-4">
-                                <div class="stat-item">
-                                    <h3 class="stat-number">10+</h3>
-                                    <p class="stat-label">Years</p>
-                                </div>
+                        </a>
+                    </div>
+                    <div class="col-12" data-aos="fade-up" data-aos-delay="160">
+                        <a href="bakery-solutions.html" class="sol-card" style="height:178px;">
+                            <img src="images/bakery.webp" alt="Bakery Solutions">
+                            <div class="sol-card-overlay"></div>
+                            <div class="sol-card-body" style="padding:20px;">
+                                <div class="sol-card-icon" style="width:38px;height:38px;font-size:16px;margin-bottom:8px;"><i class="fas fa-bread-slice"></i></div>
+                                <h3 style="font-size:18px;">Bakery Solutions</h3>
+                                <p style="font-size:12px;margin-bottom:8px;">Professional ovens, mixers, display cases & more.</p>
+                                <span class="sol-card-link" style="font-size:12px;">Explore <i class="fas fa-arrow-right"></i></span>
                             </div>
-                            <div class="col-4">
-                                <div class="stat-item">
-                                    <h3 class="stat-number">98%</h3>
-                                    <p class="stat-label">Satisfaction</p>
-                                </div>
-                            </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
             </div>
-
-            <!-- RIGHT: Slideshow -->
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="hero-image">
-                    <div class="hero-slideshow" id="heroSlideshow">
-                        <button class="slide-btn prev" id="slidePrev"><i class="fas fa-chevron-left"></i></button>
-                        <div class="slide active"><img src="images/slide.jpeg" alt="Supermarket Solutions"></div>
-                        <div class="slide"><img src="images/bakery.webp" alt="Cold Storage Solutions"></div>
-                        <div class="slide"><img src="images/restaurant.jpg" alt="Kitchen Solutions"></div>
-                        <div class="slide"><img src="images/coldroom.webp" alt="Bakery Solutions"></div>
-                        <div class="slide"><img src="images/super.jpg" alt="Retail Equipment"></div>
-                        <button class="slide-btn next" id="slideNext"><i class="fas fa-chevron-right"></i></button>
-                    </div>
-                    <div class="slide-dots" id="slideDots">
-                        <span class="active" data-index="0"></span>
-                        <span data-index="1"></span>
-                        <span data-index="2"></span>
-                        <span data-index="3"></span>
-                        <span data-index="4"></span>
-                    </div>
-                    <div class="floating-card" data-aos="zoom-in" data-aos-delay="200">
-                        <div class="card-icon"><i class="fas fa-check-circle"></i></div>
-                        <div class="card-content">
-                            <h5>Quality Assured</h5>
-                            <p>Premium Equipment</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 </section>
 
 <!-- ═══════════════════════════════════════════
-     FEATURES
+     NUMBERS
 ═══════════════════════════════════════════ -->
-<section class="features-section bg-light">
+<section class="numbers-section">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-3 col-md-6" data-aos="fade-up">
-                <div class="feature-box">
-                    <div class="feature-icon"><i class="fas fa-shipping-fast"></i></div>
-                    <h4>Fast Delivery</h4>
-                    <p>Quick installation across Nigeria</p>
+        <div class="row g-0">
+            <div class="col-6 col-lg-3" data-aos="fade-up">
+                <div class="num-card">
+                    <div class="num">500+</div>
+                    <div class="lbl">Cold Rooms Installed</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="feature-box">
-                    <div class="feature-icon"><i class="fas fa-award"></i></div>
-                    <h4>Premium Quality</h4>
-                    <p>Top-grade equipment &amp; materials</p>
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+                <div class="num-card">
+                    <div class="num">300+</div>
+                    <div class="lbl">Supermarkets Equipped</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="feature-box">
-                    <div class="feature-icon"><i class="fas fa-headset"></i></div>
-                    <h4>24/7 Support</h4>
-                    <p>Always here when you need us</p>
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="160">
+                <div class="num-card">
+                    <div class="num">200+</div>
+                    <div class="lbl">Kitchen Projects</div>
                 </div>
             </div>
-            <div class="col-lg-3 col-md-6" data-aos="fade-up" data-aos-delay="300">
-                <div class="feature-box">
-                    <div class="feature-icon"><i class="fas fa-tools"></i></div>
-                    <h4>Expert Installation</h4>
-                    <p>Professional setup services</p>
+            <div class="col-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+                <div class="num-card">
+                    <div class="num">150+</div>
+                    <div class="lbl">Bakeries Fitted</div>
                 </div>
             </div>
         </div>
@@ -290,110 +616,55 @@
 <!-- ═══════════════════════════════════════════
      ABOUT
 ═══════════════════════════════════════════ -->
-<section class="about-section">
+<section class="about-strip">
     <div class="container">
         <div class="row align-items-center g-5">
-            <div class="col-lg-6" data-aos="fade-right">
-                <div class="about-image-grid">
-                    <img src="images/slide3.jpg" alt="FERS" class="img-fluid rounded-4 shadow">
-                    <div class="experience-badge">
+            <div class="col-lg-5" data-aos="fade-right">
+                <div class="position-relative">
+                    <img src="images/slide3.jpg" alt="FERS Team" class="img-fluid rounded-4 shadow-lg">
+                    <div class="exp-badge">
                         <h3>10+</h3>
                         <p>Years of Excellence</p>
                     </div>
                 </div>
             </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="section-header mb-4">
-                    <span class="section-badge">About FERS</span>
-                    <h2 class="section-title mt-3">Nigeria's Trusted Partner in Retail Solutions</h2>
-                </div>
-                <p class="text-muted mb-4">
-                    With over a decade of experience, FERS has been at the forefront of providing premium retail equipment and solutions to businesses across Nigeria. From supermarkets to restaurants, we deliver excellence.
+            <div class="col-lg-7" data-aos="fade-left">
+                <span class="about-strip .section-badge" style="display:inline-block;background:rgba(255,107,53,0.1);color:#FF6B35;font-weight:700;font-size:13px;padding:6px 18px;border-radius:50px;letter-spacing:0.5px;text-transform:uppercase;">About FERS</span>
+                <h2 class="sec-title mt-3 mb-4">Nigeria's Most Trusted Partner for Retail Equipment</h2>
+                <p class="text-muted mb-5" style="font-size:16px;line-height:1.8;">
+                    Since 2015, FERS has equipped hundreds of supermarkets, restaurants, bakeries, and cold chain businesses across Nigeria. We don't just supply equipment — we design your space, install everything professionally, and support you long after handover.
                 </p>
-                <div class="feature-list">
-                    <div class="feature-list-item">
-                        <i class="fas fa-check-circle text-primary me-3"></i>
-                        <span>Complete retail space planning and design</span>
-                    </div>
-                    <div class="feature-list-item">
-                        <i class="fas fa-check-circle text-primary me-3"></i>
-                        <span>High-quality equipment from trusted brands</span>
-                    </div>
-                    <div class="feature-list-item">
-                        <i class="fas fa-check-circle text-primary me-3"></i>
-                        <span>Professional installation and setup</span>
-                    </div>
-                    <div class="feature-list-item">
-                        <i class="fas fa-check-circle text-primary me-3"></i>
-                        <span>Ongoing maintenance and support</span>
+                <div class="check-item">
+                    <div class="ci-icon"><i class="fas fa-check"></i></div>
+                    <div class="ci-text">
+                        <h6>Complete Space Planning & Design</h6>
+                        <p>Free consultation and layout optimisation before any purchase.</p>
                     </div>
                 </div>
-                <a href="about.html" class="btn btn-secondary btn-lg mt-4">
-                    Discover More <i class="fas fa-arrow-right ms-2"></i>
+                <div class="check-item">
+                    <div class="ci-icon"><i class="fas fa-check"></i></div>
+                    <div class="ci-text">
+                        <h6>Premium International Brands</h6>
+                        <p>We supply only certified, high-quality equipment with full warranties.</p>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon"><i class="fas fa-check"></i></div>
+                    <div class="ci-text">
+                        <h6>Expert Installation & Commissioning</h6>
+                        <p>Our factory-trained engineers handle everything from delivery to sign-off.</p>
+                    </div>
+                </div>
+                <div class="check-item">
+                    <div class="ci-icon"><i class="fas fa-check"></i></div>
+                    <div class="ci-text">
+                        <h6>Ongoing Maintenance & Support</h6>
+                        <p>Service agreements, spare parts, and 24/7 technical helpline.</p>
+                    </div>
+                </div>
+                <a href="about.html" class="btn btn-primary mt-4">
+                    Learn More About FERS <i class="fas fa-arrow-right ms-2"></i>
                 </a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- ═══════════════════════════════════════════
-     SOLUTIONS
-═══════════════════════════════════════════ -->
-<section class="solutions-section bg-light">
-    <div class="container">
-        <div class="text-center mb-5" data-aos="fade-up">
-            <span class="section-badge">Our Solutions</span>
-            <h2 class="section-title mt-3">Comprehensive Retail Solutions</h2>
-            <p class="section-subtitle">Tailored equipment and services for every business need</p>
-        </div>
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6" data-aos="fade-up">
-                <div class="solution-card">
-                    <div class="solution-icon"><i class="fas fa-store"></i></div>
-                    <h3>Supermarket Solutions</h3>
-                    <p>Complete supermarket setup including shelving, refrigeration, checkout counters, and shopping carts.</p>
-                    <a href="supermarket-solutions.html" class="solution-link">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="solution-card">
-                    <div class="solution-icon"><i class="fas fa-snowflake"></i></div>
-                    <h3>Cold Storage</h3>
-                    <p>Industrial refrigeration systems, cold rooms, and temperature-controlled storage solutions.</p>
-                    <a href="cold-storage.html" class="solution-link">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="solution-card">
-                    <div class="solution-icon"><i class="fas fa-utensils"></i></div>
-                    <h3>Kitchen Solutions</h3>
-                    <p>Commercial kitchen equipment for restaurants, hotels, and catering businesses.</p>
-                    <a href="kitchen-solutions.html" class="solution-link">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up">
-                <div class="solution-card">
-                    <div class="solution-icon"><i class="fas fa-bread-slice"></i></div>
-                    <h3>Bakery Solutions</h3>
-                    <p>Professional bakery equipment including ovens, mixers, display cases, and more.</p>
-                    <a href="bakery-solutions.html" class="solution-link">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="solution-card">
-                    <div class="solution-icon"><i class="fas fa-ice-cream"></i></div>
-                    <h3>Display Equipment</h3>
-                    <p>Hot and cold display units, showcases, and merchandising solutions.</p>
-                    <a href="#" class="solution-link">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="solution-card">
-                    <div class="solution-icon"><i class="fas fa-tools"></i></div>
-                    <h3>Custom Solutions</h3>
-                    <p>Tailored equipment and layouts designed specifically for your unique requirements.</p>
-                    <a href="#" class="solution-link">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
-                </div>
             </div>
         </div>
     </div>
@@ -402,63 +673,44 @@
 <!-- ═══════════════════════════════════════════
      WHY CHOOSE US
 ═══════════════════════════════════════════ -->
-<section class="why-choose-section">
+<section class="why-section">
     <div class="container">
-        <div class="row align-items-center g-5">
-            <div class="col-lg-6" data-aos="fade-right">
-                <div class="section-header mb-4">
-                    <span class="section-badge">Why Choose FERS</span>
-                    <h2 class="section-title mt-3">Your Success is Our Priority</h2>
-                </div>
-                <p class="mb-4" style="color:white;">
-                    We understand that the right equipment can make or break your business. That's why we go beyond just supplying products – we partner with you for long-term success.
-                </p>
-                <div class="why-choose-list">
-                    <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-chart-line"></i></div>
-                        <div class="why-content">
-                            <h4>Proven Track Record</h4>
-                            <p>Over 500 successful projects across Nigeria with satisfied clients in every major city.</p>
-                        </div>
-                    </div>
-                    <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-shield-alt"></i></div>
-                        <div class="why-content">
-                            <h4>Quality Guarantee</h4>
-                            <p>All our equipment comes with comprehensive warranties and after-sales support.</p>
-                        </div>
-                    </div>
-                    <div class="why-item">
-                        <div class="why-icon"><i class="fas fa-lightbulb"></i></div>
-                        <div class="why-content">
-                            <h4>Expert Consultation</h4>
-                            <p>Free layout planning and requirement analysis to optimize your retail space.</p>
-                        </div>
-                    </div>
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="sec-badge">Why FERS</span>
+            <h2 class="sec-title mt-2">Your Success Depends on the Right Equipment</h2>
+            <p class="sec-sub mt-3">We go beyond supply. Here's what sets FERS apart from the competition.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-6 col-lg-3" data-aos="fade-up">
+                <div class="why-card">
+                    <div class="why-card-num">01</div>
+                    <div class="why-card-icon"><i class="fas fa-chart-line"></i></div>
+                    <h4>Proven Track Record</h4>
+                    <p>Over 500 successfully completed projects across Lagos, Abuja, Port Harcourt and beyond.</p>
                 </div>
             </div>
-            <div class="col-lg-6" data-aos="fade-left">
-                <div class="stats-grid">
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-users"></i></div>
-                        <h3>500+</h3>
-                        <p>Happy Clients</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-project-diagram"></i></div>
-                        <h3>1000+</h3>
-                        <p>Projects Completed</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-box"></i></div>
-                        <h3>5000+</h3>
-                        <p>Equipment Installed</p>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-icon"><i class="fas fa-star"></i></div>
-                        <h3>98%</h3>
-                        <p>Satisfaction Rate</p>
-                    </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="80">
+                <div class="why-card">
+                    <div class="why-card-num">02</div>
+                    <div class="why-card-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Full Warranty & After-Care</h4>
+                    <p>Every product comes with a comprehensive manufacturer warranty and our personal service guarantee.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="160">
+                <div class="why-card">
+                    <div class="why-card-num">03</div>
+                    <div class="why-card-icon"><i class="fas fa-lightbulb"></i></div>
+                    <h4>Free Expert Consultation</h4>
+                    <p>Get a no-obligation layout plan and budget estimate — we invest in your project before you do.</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-lg-3" data-aos="fade-up" data-aos-delay="240">
+                <div class="why-card">
+                    <div class="why-card-num">04</div>
+                    <div class="why-card-icon"><i class="fas fa-bolt"></i></div>
+                    <h4>Fast Turnaround</h4>
+                    <p>We work to your timeline — quick delivery, efficient installation, minimal downtime to your business.</p>
                 </div>
             </div>
         </div>
@@ -468,58 +720,52 @@
 <!-- ═══════════════════════════════════════════
      TESTIMONIALS
 ═══════════════════════════════════════════ -->
-<section class="testimonials-section bg-light">
+<section class="testi-section">
     <div class="container">
         <div class="text-center mb-5" data-aos="fade-up">
-            <span class="section-badge">Testimonials</span>
-            <h2 class="section-title mt-3">What Our Clients Say</h2>
-            <p class="section-subtitle">Real feedback from businesses we've helped transform</p>
+            <span class="sec-badge">Testimonials</span>
+            <h2 class="sec-title mt-2">Trusted by Businesses Across Nigeria</h2>
+            <p class="sec-sub mt-3">Real feedback from real clients who transformed their spaces with FERS.</p>
         </div>
         <div class="row g-4">
             <div class="col-lg-4 col-md-6" data-aos="fade-up">
-                <div class="testimonial-card">
-                    <div class="stars mb-3">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"FERS completely transformed our supermarket. The equipment is top-notch and their team was professional throughout the entire process. Highly recommended!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar"><img src="images/client-1.jpg" alt="Client"></div>
-                        <div class="author-info">
-                            <h5>Adebayo Ogunleye</h5>
-                            <p>CEO, Fresh Market Lagos</p>
+                <div class="testi-card">
+                    <div class="testi-quote">"</div>
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-text">FERS completely transformed our supermarket. The equipment is top-notch and their team was professional throughout. Highly recommended!</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">AO</div>
+                        <div>
+                            <p class="testi-name">Adebayo Ogunleye</p>
+                            <p class="testi-role">CEO, Fresh Market Lagos</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="testimonial-card">
-                    <div class="stars mb-3">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"The cold storage solution they provided has been running flawlessly for 2 years. Their after-sales service is exceptional. Best investment we made!"</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar"><img src="images/client-2.jpg" alt="Client"></div>
-                        <div class="author-info">
-                            <h5>Chioma Nwankwo</h5>
-                            <p>Owner, ChiChi Bakery</p>
+                <div class="testi-card">
+                    <div class="testi-quote">"</div>
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-text">The cold storage solution has been running flawlessly for 2 years. Their after-sales service is exceptional. Best investment we ever made!</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">CN</div>
+                        <div>
+                            <p class="testi-name">Chioma Nwankwo</p>
+                            <p class="testi-role">Owner, ChiChi Bakery</p>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="testimonial-card">
-                    <div class="stars mb-3">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="testimonial-text">"From consultation to installation, FERS exceeded our expectations. They understood our needs and delivered a perfect kitchen setup for our restaurant."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar"><img src="images/client-3.jpg" alt="Client"></div>
-                        <div class="author-info">
-                            <h5>Mohammed Abdullahi</h5>
-                            <p>Manager, Golden Spoon Restaurant</p>
+                <div class="testi-card">
+                    <div class="testi-quote">"</div>
+                    <div class="testi-stars">★★★★★</div>
+                    <p class="testi-text">From consultation to installation, FERS exceeded our expectations. They understood our needs and delivered a perfect kitchen setup for our restaurant.</p>
+                    <div class="testi-author">
+                        <div class="testi-avatar">MA</div>
+                        <div>
+                            <p class="testi-name">Mohammed Abdullahi</p>
+                            <p class="testi-role">Manager, Golden Spoon Restaurant</p>
                         </div>
                     </div>
                 </div>
@@ -529,20 +775,263 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
-     CTA
+     PARTNERS — INFINITE SCROLL LOGO STRIP
 ═══════════════════════════════════════════ -->
-<section class="cta-section">
+<div class="partners-scroll-section">
     <div class="container">
-        <div class="cta-wrapper" data-aos="zoom-in">
-            <div class="row align-items-center g-4">
-                <div class="col-lg-8">
-                    <h2 class="cta-title">Ready to Transform Your Business?</h2>
-                    <p class="cta-text">Get a free consultation and quote for your retail space today.</p>
+        <div class="text-center mb-4" data-aos="fade-up">
+            <span class="sec-badge">Our Partners</span>
+            <h2 class="sec-title mt-2">Trusted Brands We Represent</h2>
+            <p class="sec-sub mt-3">We are authorised representatives for the world's leading commercial equipment manufacturers.</p>
+        </div>
+    </div>
+    <div class="partners-track-wrap">
+        <div class="partners-track">
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-snowflake"></i><span>Hussmann</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-fire"></i><span>Rational</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-temperature-low"></i><span>Arneg</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-wind"></i><span>Electrolux</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-store"></i><span>Henny Penny</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-industry"></i><span>Zanussi</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-boxes"></i><span>Irinox</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-cog"></i><span>True Refrigeration</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-bread-slice"></i><span>Hobart</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-leaf"></i><span>Manitowoc</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-blender"></i><span>Robot Coupe</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-utensils"></i><span>Falcon</span></div></div>
+            <!-- Duplicate for seamless infinite loop -->
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-snowflake"></i><span>Hussmann</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-fire"></i><span>Rational</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-temperature-low"></i><span>Arneg</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-wind"></i><span>Electrolux</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-store"></i><span>Henny Penny</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-industry"></i><span>Zanussi</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-boxes"></i><span>Irinox</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-cog"></i><span>True Refrigeration</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-bread-slice"></i><span>Hobart</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-leaf"></i><span>Manitowoc</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-blender"></i><span>Robot Coupe</span></div></div>
+            <div class="partner-logo-item"><div class="partner-logo-box"><i class="fas fa-utensils"></i><span>Falcon</span></div></div>
+        </div>
+    </div>
+</div>
+
+<!-- ═══════════════════════════════════════════
+     OUR BRANDS SECTION
+═══════════════════════════════════════════ -->
+<section class="our-brands-section">
+    <div class="container">
+        <div class="text-center mb-5" data-aos="fade-up">
+            <span class="sec-badge">Our Brands</span>
+            <h2 class="sec-title mt-2">World-Class Equipment, Local Expertise</h2>
+            <p class="sec-sub mt-3">As authorised representatives, we supply, install and service the most respected names in commercial equipment globally.</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="0">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-snowflake"></i></div>
+                    <h6>Hussmann</h6>
+                    <p>Refrigeration &amp; Cold Rooms</p>
                 </div>
-                <div class="col-lg-4 text-lg-end">
-                    <a href="contact.html" class="btn btn-light btn-lg">
-                        Get Started Now <i class="fas fa-arrow-right ms-2"></i>
-                    </a>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="60">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-fire"></i></div>
+                    <h6>Rational</h6>
+                    <p>Commercial Ovens</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="120">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-temperature-low"></i></div>
+                    <h6>Arneg</h6>
+                    <p>Display &amp; Refrigerated Cases</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="180">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-wind"></i></div>
+                    <h6>Electrolux</h6>
+                    <p>Professional Kitchen Equipment</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="240">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-industry"></i></div>
+                    <h6>Zanussi</h6>
+                    <p>Laundry &amp; Catering Solutions</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="300">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-bread-slice"></i></div>
+                    <h6>Hobart</h6>
+                    <p>Bakery &amp; Food Processing</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="360">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-store"></i></div>
+                    <h6>Henny Penny</h6>
+                    <p>Frying &amp; Holding Equipment</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="420">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-cog"></i></div>
+                    <h6>True</h6>
+                    <p>Commercial Refrigerators</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="480">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-boxes"></i></div>
+                    <h6>Irinox</h6>
+                    <p>Blast Chilling &amp; Shock Freezing</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="540">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-leaf"></i></div>
+                    <h6>Manitowoc</h6>
+                    <p>Ice Machines &amp; Beverage</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="600">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-blender"></i></div>
+                    <h6>Robot Coupe</h6>
+                    <p>Food Preparation Equipment</p>
+                </div>
+            </div>
+            <div class="col-6 col-md-4 col-lg-2" data-aos="fade-up" data-aos-delay="660">
+                <div class="brand-card">
+                    <div class="brand-card-icon"><i class="fas fa-utensils"></i></div>
+                    <h6>Falcon</h6>
+                    <p>Cooking &amp; Range Equipment</p>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-5" data-aos="fade-up">
+            <a href="contact.html" class="btn btn-primary">Request Brand Catalogue <i class="fas fa-arrow-right ms-2"></i></a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════════════════════════════════════
+     FAQ SECTION
+═══════════════════════════════════════════ -->
+<section class="faq-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8 text-center mb-5" data-aos="fade-up">
+                <span class="sec-badge">FAQs</span>
+                <h2 class="sec-title mt-2">Frequently Asked Questions</h2>
+                <p class="sec-sub mt-3">Everything you need to know about working with FERS. Can't find your answer? <a href="contact.html" style="color:#FF6B35;font-weight:600;">Contact us directly.</a></p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-lg-9" data-aos="fade-up">
+                <div class="accordion" id="faqAccordion">
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn" type="button" data-bs-toggle="collapse" data-bs-target="#faq1" aria-expanded="true">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                What types of businesses do you work with?
+                            </button>
+                        </h2>
+                        <div id="faq1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                We work with supermarkets, hypermarkets, convenience stores, restaurants, fast food outlets, hotels, bakeries, cloud kitchens, food processing plants, hospitals, schools, and any business requiring commercial refrigeration, food preparation, or retail equipment.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2" aria-expanded="false">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                Do you handle installation as well as supply?
+                            </button>
+                        </h2>
+                        <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                Absolutely. FERS provides a complete turnkey service — from space planning and equipment specification, through to delivery, installation, commissioning, and staff training. We handle everything so you can focus on your business.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3" aria-expanded="false">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                What warranty comes with your equipment?
+                            </button>
+                        </h2>
+                        <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                All equipment comes with the full manufacturer warranty — typically 1 to 3 years depending on the brand and product category. FERS also offers extended service agreements and maintenance contracts for complete peace of mind.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4" aria-expanded="false">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                Do you deliver and install outside Lagos?
+                            </button>
+                        </h2>
+                        <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                Yes! We serve clients across Nigeria including Abuja, Port Harcourt, Ibadan, Kano, Enugu, and beyond. Our logistics and installation teams are equipped to handle nationwide projects with the same standard of professionalism.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5" aria-expanded="false">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                How long does a typical cold room installation take?
+                            </button>
+                        </h2>
+                        <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                A standard cold room installation typically takes 3 to 7 business days depending on size and complexity. Larger walk-in freezers or multi-room cold storage facilities may take up to 2–3 weeks. We always provide a clear timeline before work begins.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6" aria-expanded="false">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                Can I get a free consultation and layout plan?
+                            </button>
+                        </h2>
+                        <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                Yes — this is completely free and with no obligation. Our expert team will assess your space, understand your business needs, and provide a professional layout recommendation and equipment specification. Simply contact us to get started.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="accordion-item faq-item">
+                        <h2 class="accordion-header">
+                            <button class="accordion-button faq-btn collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7" aria-expanded="false">
+                                <i class="fas fa-question-circle faq-q-icon me-3"></i>
+                                Do you offer maintenance and after-sales support?
+                            </button>
+                        </h2>
+                        <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                            <div class="accordion-body faq-body">
+                                Yes. We have a dedicated after-sales team offering preventive maintenance schedules, emergency breakdown response, spare parts supply, and a technical helpline. Our goal is to ensure your equipment performs at its best for years to come.
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
             </div>
         </div>
@@ -550,35 +1039,61 @@
 </section>
 
 <!-- ═══════════════════════════════════════════
-     CONTACT INFO
+     CTA BAND
 ═══════════════════════════════════════════ -->
-<section class="contact-info-section bg-light">
+<section class="cta-band">
     <div class="container">
-        <div class="row g-4">
-            <div class="col-lg-4 col-md-6" data-aos="fade-up">
-                <div class="info-box">
-                    <div class="info-icon"><i class="fas fa-map-marker-alt"></i></div>
-                    <h4>Visit Us</h4>
-                    <p>1 Limca Way, Isolo Industrial Estate<br>Isolo Lagos, Nigeria</p>
-                </div>
+        <div class="row align-items-center g-4">
+            <div class="col-lg-7" data-aos="fade-right">
+                <h2 class="mb-3">Ready to Build Your Dream Retail Space?</h2>
+                <p class="mb-0">Talk to our experts today — get a free consultation, layout plan, and no-obligation quote. We'll handle everything from start to finish.</p>
             </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
-                <div class="info-box">
-                    <div class="info-icon"><i class="fas fa-phone-alt"></i></div>
-                    <h4>Call Us</h4>
-                    <p><a href="tel:+2349123456700">+234 912 345 6700</a><br>Mon - Sat: 8AM - 6PM</p>
-                </div>
-            </div>
-            <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
-                <div class="info-box">
-                    <div class="info-icon"><i class="fas fa-envelope"></i></div>
-                    <h4>Email Us</h4>
-                    <p><a href="mailto:info@fers.com.ng">info@fers.com.ng</a><br>We reply within 24 hours</p>
-                </div>
+            <div class="col-lg-5 text-lg-end d-flex flex-wrap gap-3 justify-content-lg-end" data-aos="fade-left">
+                <a href="contact.html" class="btn-cta-white">Get Free Quote <i class="fas fa-arrow-right"></i></a>
+                <a href="tel:+2349123456700" class="btn-cta-outline-white"><i class="fas fa-phone-alt"></i> Call Now</a>
             </div>
         </div>
     </div>
 </section>
+
+<!-- ═══════════════════════════════════════════
+     CONTACT BAR
+═══════════════════════════════════════════ -->
+<div class="contact-bar">
+    <div class="container">
+        <div class="row g-4 align-items-center">
+            <div class="col-md-4">
+                <div class="cbar-item">
+                    <div class="cbar-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <div class="cbar-text">
+                        <h5>Visit Us</h5>
+                        <p>1 Limca Way, Isolo Industrial Estate, Isolo Lagos</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cbar-item">
+                    <div class="cbar-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="cbar-text">
+                        <h5>Call Us</h5>
+                        <a href="tel:+2349123456700">+234 912 345 6700</a>
+                        <p>Mon – Sat: 8AM – 6PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="cbar-item">
+                    <div class="cbar-icon"><i class="fas fa-envelope"></i></div>
+                    <div class="cbar-text">
+                        <h5>Email Us</h5>
+                        <a href="mailto:info@fers.com.ng">info@fers.com.ng</a>
+                        <p>We reply within 24 hours</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- ═══════════════════════════════════════════
      FOOTER
@@ -588,7 +1103,7 @@
         <div class="row g-5">
             <div class="col-lg-4 col-md-6">
                 <div class="footer-widget">
-                    <img src="fer.png" alt="FERS Logo" class="footer-logo mb-4" height="45">
+                    <img src="fer.png" alt="FERS Logo" class="footer-logo mb-4" height="60">
                     <p class="mb-4">Leading provider of premium retail solutions and equipment across Nigeria. Transforming retail spaces since 2015.</p>
                     <div class="social-links">
                         <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
@@ -660,60 +1175,60 @@
 <script src="js/script.js"></script>
 
 <script>
-/* ── Word Cycling ───────────────────────────────── */
-(function () {
-    var words = ['Retail Space','Supermarket','Restaurant','Bakery','Cold Storage','Kitchen','Business'];
-    var idx = 0;
-    var el  = document.getElementById('heroWord');
+    /* ── AOS Init ────────────────────────────── */
+    AOS.init({ duration: 700, once: true, offset: 60 });
 
-    function cycle() {
-        idx = (idx + 1) % words.length;
-        el.classList.remove('in');
-        el.classList.add('out');
-        setTimeout(function () {
-            el.textContent = words[idx];
-            el.classList.remove('out');
-            el.classList.add('in');
-        }, 370);
-    }
+    /* ── Footer year ─────────────────────────── */
+    document.getElementById('footerYear').textContent = new Date().getFullYear();
 
-    if (el) setInterval(cycle, 2800);
-})();
+    /* ── Word Cycling ────────────────────────── */
+    (function () {
+        var words = ['Supermarket', 'Restaurant', 'Bakery', 'Cold Room', 'Kitchen', 'Retail Space'];
+        var idx = 0;
+        var el  = document.getElementById('heroWord');
 
-/* ── Image Slideshow ────────────────────────────── */
-(function () {
-    var slides  = document.querySelectorAll('#heroSlideshow .slide');
-    var dots    = document.querySelectorAll('#slideDots span');
-    var prev    = document.getElementById('slidePrev');
-    var next    = document.getElementById('slideNext');
-    var cur     = 0;
-    var timer;
+        function cycle() {
+            idx = (idx + 1) % words.length;
+            el.classList.remove('in');
+            el.classList.add('out');
+            setTimeout(function () {
+                el.textContent = words[idx];
+                el.classList.remove('out');
+                el.classList.add('in');
+            }, 370);
+        }
 
-    function go(n) {
-        slides[cur].classList.remove('active');
-        dots[cur].classList.remove('active');
-        cur = (n + slides.length) % slides.length;
-        slides[cur].classList.add('active');
-        dots[cur].classList.add('active');
-    }
+        if (el) setInterval(cycle, 3000);
+    })();
 
-    function start() { timer = setInterval(function () { go(cur + 1); }, 3500); }
-    function reset() { clearInterval(timer); start(); }
+    /* ── Hero Background Slideshow ───────────── */
+    (function () {
+        var slides = document.querySelectorAll('#heroBgSlideshow .bg-slide');
+        var dots   = document.querySelectorAll('#heroDots span');
+        var cur    = 0;
+        var timer;
 
-    if (slides.length) {
-        start();
-        prev.addEventListener('click', function () { go(cur - 1); reset(); });
-        next.addEventListener('click', function () { go(cur + 1); reset(); });
-        dots.forEach(function (d) {
-            d.addEventListener('click', function () { go(+this.dataset.index); reset(); });
-        });
-        document.getElementById('heroSlideshow').addEventListener('mouseenter', function () { clearInterval(timer); });
-        document.getElementById('heroSlideshow').addEventListener('mouseleave', start);
-    }
-})();
+        function go(n) {
+            slides[cur].classList.remove('active');
+            dots[cur].classList.remove('active');
+            cur = (n + slides.length) % slides.length;
+            slides[cur].classList.add('active');
+            dots[cur].classList.add('active');
+        }
 
-/* ── Footer Year ────────────────────────────────── */
-document.getElementById('footerYear').textContent = new Date().getFullYear();
+        function start() { timer = setInterval(function () { go(cur + 1); }, 6000); }
+        function reset() { clearInterval(timer); start(); }
+
+        if (slides.length) {
+            start();
+            dots.forEach(function (d) {
+                d.addEventListener('click', function () {
+                    go(parseInt(this.getAttribute('data-index')));
+                    reset();
+                });
+            });
+        }
+    })();
 </script>
 
 </body>
